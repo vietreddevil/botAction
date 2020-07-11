@@ -1,0 +1,17 @@
+{
+    "rabbit_server": "orm.vn",
+    "rabbit_vhost": "/",
+    "rabbit_user": "inforequeue",
+    "rabbit_password": "InfoRe28",
+    "input_queue": "bocbang_queue",
+    "output_queue": "crawl_news_extracted",
+    "parser_output_queue": "crawl_news_content",
+    "number_of_threads": 1,
+    "request_timeout": 60,
+    "proxy_server": "150.95.105.101",
+    "proxy_port": "3128",
+    "speechApi": "http://1c5ac7f4.ngrok.io/recognition",
+    "elastic": "http://10.2.2.202:9200",
+    "elastic_index": "test",
+    "elastic_type": "data"
+}
