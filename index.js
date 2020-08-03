@@ -55,7 +55,9 @@ var getPagemainPostNumber = async (page) => {
 var reportPosts = (_len, i, page) => {
     return new Promise(async (resolve, reject) => {
         if (i == _len + 1) {
-            resolve(1);
+        	setTimeout(function() {
+            	resolve(1);
+        	}, 1000 * 15)
         } else {
             (async () => { 
                 /////////// 
@@ -74,7 +76,7 @@ var reportPosts = (_len, i, page) => {
                     console.log(e);
                 }
                 await page.waitFor(5000);
-                /////////
+                console.log('post ' + i);
                 i++;
                 await reportPosts(_len, i, page);
                 resolve(1);
@@ -95,7 +97,7 @@ var startBot = async (botNumber, username, password) => {
     try {
         browser = await puppeteer.launch({
             headless: false, args: [
-                '--window-size=760,540',
+                '--no-sandbox',
             ],
         });
         page = await browser.newPage();
@@ -126,10 +128,11 @@ var startBot = async (botNumber, username, password) => {
                     timeout: config.timeout * 1000
                 });
                 let pageMainPostNumber = await getPagemainPostNumber(page);
+                console.log('report ' + pageMainPostNumber + ' posts');
                 reportPosts(pageMainPostNumber, 1, page).then(rs => {
-                    console.log(rs);
+                    console.log(pageID);
+                    consume_channel.ack(msg);
                 });
-                consume_channel.ack(msg);
             }
         }, {
             noAck: false
@@ -142,8 +145,8 @@ var startBot = async (botNumber, username, password) => {
 
 var start = () => {
     //dung nick clone thoi, khong co bao mat cap 2 cang tot
-    startBot(1, 'username', 'password');
-    // startBot(2, 'ccccccccccccccc', 'cc');
+    startBot(1, 'account1', 'pwd1');
+    startBot(2, 'account2', 'pwd2');
 }
 
 start();
